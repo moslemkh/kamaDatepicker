@@ -74,7 +74,7 @@ function kamaDatepicker(elementID, opt) {
 	];
 
 	// set options
-	options.placeholder = options.placeholder !== undefined ? options.placeholder : "";
+	options.placeholder = options.placeholder !== undefined ? options.placeholder : "روز/ماه/سال";
 	options.twodigit = options.twodigit !== undefined ? options.twodigit : true;
 	options.closeAfterSelect = options.closeAfterSelect !== undefined ? options.closeAfterSelect : true;
 	options.nextButtonIcon = options.nextButtonIcon !== undefined ? options.nextButtonIcon : false;
@@ -184,6 +184,33 @@ function kamaDatepicker(elementID, opt) {
 		var gotoToday = calendarDiv.find(".bd-goto-today");
 	}
 
+	// Separate the date with / when typing
+	//start
+	$(`#${elementID}`)[0].addEventListener('input', function (e) {
+		this.type = 'text';
+		var input = this.value;					
+		if (/\D\/$/.test(input)) input = input.substr(0, input.length - 3);
+		var values = input.split('/').map(function (v) {
+			return v.replace(/\D/g, '');
+		});
+		if (values[0]) values[0] = checkValue(values[0], 31);
+		if (values[1]) values[1] = checkValue(values[1], 12);
+		var output = values.map(function (v, i) {
+			return v.length === 2 && i < 2 ? v + ' / ' : v;
+		});
+		this.value = output.join('').substr(0, 14);
+	});
+	function checkValue(str, max) {
+		if (str.charAt(0) !== '0' || str === '00') {
+			var num = parseInt(str);
+			if (isNaN(num) || num <= 0 || num > max) num = 1;
+			str = num > parseInt(max.toString().charAt(0))
+				&& num.toString().length === 1 ? '0' + num : num.toString();
+		}
+		return str;
+	}		
+	//end
+	
 	// opening and closing functionality
 	inputElement.on("focus", function () {
 		mainDiv.removeClass("bd-hide");

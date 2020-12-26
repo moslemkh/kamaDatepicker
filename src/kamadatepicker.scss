@@ -128,3 +128,8 @@
 	cursor: pointer;
 	text-align: center;
 }
+
+/* remove space between number of date when typing */
+input {
+    word-spacing:-3px;
+}
