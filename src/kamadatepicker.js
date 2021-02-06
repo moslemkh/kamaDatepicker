@@ -1,4 +1,4 @@
-require("./kamadatepicker.scss");
+// require("./kamadatepicker.scss");
 
 window.kamaDatepicker = kamaDatepicker;
 

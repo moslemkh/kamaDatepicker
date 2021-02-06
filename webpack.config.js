@@ -3,7 +3,7 @@ const path = require("path"),
 	package = require("./package.json"),
 	MiniCssExtractPlugin = require('mini-css-extract-plugin'),
 	OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'),
-	buildMode = "production"; // 'development' or 'production'
+	buildMode = "development"; // 'development' or 'production'
 
 module.exports = {
 	mode: buildMode,
